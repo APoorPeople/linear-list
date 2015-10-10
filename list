@@ -1,0 +1,99 @@
+#include<consts.h>
+#include<stdio.h>
+#define MAXSIZE 5
+/*建立顺序表*/
+CreateSeqList(SequenList *L)
+{
+	int i,n;
+	printf("\t请输入表的长度：");
+	scanf("%d",&n);
+	L->last=n-1;
+	printf("请输入表中的数组元素（整形数据）：\n");
+	for(i=0;i<n;i++)
+	{
+		printf("\t第%d个元素是：",i+1);
+		scanf("%d",&L->data[i]);
+	}
+}
+/*输出表*/
+PrintfSeqList(PrintfSeqList *L)
+{
+	int j;
+	if(L->last<0)
+	{
+		printf("\t表空!\n");
+		return NULL;
+	}
+	else
+	{
+		printf("\n表的数据元素如下：\n");//error 1
+		for(j=0;j<=L->last;j++)
+			printf("%5d,",L->data[j]); //error 2
+		printf("\b)\n");//error 3
+	}
+}
+/*主函数定义*/
+void main()
+{
+	SequenList *a;
+	DataType y;
+	int m,t,read=0;
+	do
+	{
+		puts("        关于顺序表的操作\n");
+		puts("        =============================\n");
+		puts("        1--------置空表");
+		puts("        2--------建表");
+		puts("        3--------求表长");
+		puts("        4--------取结点");
+		puts("        5--------定位");
+		puts("        6--------插入");
+		puts("        7--------删除");
+		puts("        8--------输出");
+		puts("        0--------退出");
+		puts("");
+		printf("       请选择代号（0-8）");
+		scanf("%d",&read);
+		printf("\n");
+		switch(read)
+		{
+		case 1:InitList(a);break;
+		case 2:CreateSeqList(a);break;
+		case 3:printf("\t表的长度是：%d\n",length(a));break;
+		case 4:printf("\t请给出所取结点的位置？");
+			scanf("%d",&m);
+			y=Get(a,m);
+			if(y)printf("\t表中第%d位置的结点是：%d\n",m,y);
+			break;
+		case 5:printf("\t请给出定位查找的数据元素：");
+			scanf("%d",&y);
+			m=Locate(a,y);
+			if(m)printf("\t定位查找元素%d的位置：%d\n",y,m);
+			break;
+		case 6:printf("\t请输入插入的数据元素：");
+			scanf("%d",&y);
+			printf("\t请输入插入的位置：");
+			scanf("%d",&m);
+			t=Insert(a,m,y);
+			if(t)
+			{
+				printf("\t插入后表的数据元素是：\n");
+				PrintSeqList(a);
+				break;
+			}
+		case 7:printf("\t请输入删除的位置：");
+			scanf("%d",&m);
+			t=Delete(a,m);
+			if(t)
+			{
+				printf("\t删除后表的数据元素是：\n");
+				PrintSeqList(a);
+				break;
+			}
+		case 8:PrintSeqList(a);
+			break;
+		case 0:read=0;
+			break;
+		}
+	}while(read!=0);
+}
